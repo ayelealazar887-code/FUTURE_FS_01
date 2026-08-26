@@ -8,10 +8,11 @@ import {
   Users,
   Settings,
   Sparkles,
-  LogOut
+  LogOut,
+  X
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isMenuOpen, closeMenu }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,8 +30,21 @@ const Sidebar = () => {
     navigate('/login');
   };
 
+  const handleNavigation = () => {
+    closeMenu();
+  };
+
   return (
-    <aside className="w-64 h-screen bg-slate-900 border-r border-slate-800 flex flex-col justify-between p-5 select-none font-sans text-slate-300">
+    <>
+      {isMenuOpen && (
+        <button
+          type="button"
+          onClick={closeMenu}
+          aria-label="Close navigation menu"
+          className="fixed inset-0 z-40 bg-slate-950/50 lg:hidden"
+        />
+      )}
+      <aside className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 select-none flex-col justify-between border-r border-slate-800 bg-slate-900 p-5 font-sans text-slate-300 transition-transform duration-200 lg:static lg:translate-x-0 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       {/* Top Header & Navigation */}
       <div>
         {/* Brand Logo & Title */}
@@ -46,6 +60,14 @@ const Sidebar = () => {
               Enterprise
             </span>
           </div>
+          <button
+            type="button"
+            onClick={closeMenu}
+            aria-label="Close navigation menu"
+            className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
 
         {/* Menu Heading */}
@@ -65,6 +87,7 @@ const Sidebar = () => {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={handleNavigation}
                 className={`group flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
                   isActive
                     ? 'text-white bg-gradient-to-r from-orange-500/20 to-rose-500/10 border-l-4 border-orange-500 shadow-sm'
@@ -98,7 +121,8 @@ const Sidebar = () => {
           <span>Logout</span>
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 
