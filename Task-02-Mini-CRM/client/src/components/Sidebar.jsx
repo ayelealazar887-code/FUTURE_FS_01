@@ -12,7 +12,7 @@ import {
   X
 } from 'lucide-react';
 
-const Sidebar = ({ isMenuOpen, closeMenu }) => {
+const Sidebar = ({ isMenuOpen, closeMenu, onLogout }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -25,10 +25,6 @@ const Sidebar = ({ isMenuOpen, closeMenu }) => {
     { label: 'Settings', path: '/settings', icon: Settings },
   ];
 
-  const handleLogout = () => {
-    // Add any token cleanup / auth clear logic here
-    navigate('/login');
-  };
 
   const handleNavigation = () => {
     closeMenu();
@@ -45,9 +41,8 @@ const Sidebar = ({ isMenuOpen, closeMenu }) => {
         />
       )}
       <aside className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 select-none flex-col justify-between border-r border-slate-800 bg-slate-900 p-5 font-sans text-slate-300 transition-transform duration-200 lg:static lg:translate-x-0 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-      {/* Top Header & Navigation */}
+     
       <div>
-        {/* Brand Logo & Title */}
         <div className="flex items-center space-x-3 mb-8 px-2">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-rose-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
             <Sparkles className="w-5 h-5 fill-current text-white" />
@@ -70,14 +65,12 @@ const Sidebar = ({ isMenuOpen, closeMenu }) => {
           </button>
         </div>
 
-        {/* Menu Heading */}
         <div className="px-3 mb-3">
           <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
             Main Menu
           </span>
         </div>
 
-        {/* Navigation Links */}
         <nav className="space-y-1.5">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -111,10 +104,9 @@ const Sidebar = ({ isMenuOpen, closeMenu }) => {
         </nav>
       </div>
 
-      {/* Logout Action Footer */}
       <div className="pt-4 border-t border-slate-800/80">
         <button
-          onClick={handleLogout}
+          onClick={onLogout}
           className="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-colors duration-200 group"
         >
           <LogOut className="w-4 h-4 text-rose-400 group-hover:translate-x-0.5 transition-transform" />

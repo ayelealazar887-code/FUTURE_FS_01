@@ -10,12 +10,15 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-connectDB()
-
-
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
+
+
 app.use('/api', authRouter)
+
+connectDB()
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`)

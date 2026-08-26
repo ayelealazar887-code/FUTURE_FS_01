@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import Sidebar from '../components/Sidebar'
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login')
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 lg:flex">
-      <Sidebar isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
+      <Sidebar 
+        isMenuOpen={isMenuOpen}
+        closeMenu={() => setIsMenuOpen(false)}
+        onLogout={handleLogout} 
+        />
 
       <main className="min-w-0 flex-1 overflow-y-auto p-4 pt-20 sm:p-6 sm:pt-20 lg:p-8">
         <button

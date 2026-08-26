@@ -1,20 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
+    fullName: "",
+    email: "",
+    password: "",
   });
+  
+  const navigate = useNavigate()
+
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(isRegister ? 'Registering user:' : 'Logging in user:', formData);
+
+    setError("");
+    setMessage("");
+    setLoading(true);
+
+    try {
+      const endPoint = isRegister ? "/auth/register" : "/auth/login";
+
+      const response = await api.post(endPoint, formData);
+
+      console.log(response.data);
+
+      localStorage.setItem("token", response.data.token);
+      navigate("/salesoverview")
+
+      setMessage(response.data.message);
+
+      if (isRegister) {
+        setFormData({
+          fullName: "",
+          email: "",
+          password: "",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+
+      setError(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,12 +62,12 @@ const AuthForm = () => {
       <div className="max-w-md w-full mx-auto space-y-6">
         <div>
           <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-            {isRegister ? 'Create an Account' : 'Welcome Back'}
+            {isRegister ? "Create an Account" : "Welcome Back"}
           </h2>
           <p className="mt-2 text-sm text-slate-500">
             {isRegister
-              ? 'Enter your details below to set up your account.'
-              : 'Enter your credentials to access your CRM.'}
+              ? "Enter your details below to set up your account."
+              : "Enter your credentials to access your CRM."}
           </p>
         </div>
 
@@ -83,21 +121,29 @@ const AuthForm = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-3.5 px-4 bg-orange-600 hover:bg-orange-700 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
           >
-            {isRegister ? 'Sign Up' : 'Sign In'}
+            {loading ? "Please wait..." : isRegister ? "Sign Up" : "Sign In"}
           </button>
         </form>
-
+        {message && (
+          <p className="text-sm text-green-600 text-center">{message}</p>
+        )}
+        {error && <p className="text-sm text-red-600 text-center">{error}</p>}
         <div className="text-center pt-2">
           <p className="text-sm text-slate-600">
-            {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+            {isRegister ? "Already have an account?" : "Don't have an account?"}{" "}
             <button
               type="button"
-              onClick={() => setIsRegister(!isRegister)}
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setError("");
+                setMessage("");
+              }}
               className="font-semibold text-orange-600 hover:text-orange-700 transition-colors"
             >
-              {isRegister ? 'Sign In' : 'Sign Up'}
+              {isRegister ? "Sign In" : "Sign Up"}
             </button>
           </p>
         </div>
