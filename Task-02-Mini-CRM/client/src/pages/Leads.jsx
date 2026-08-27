@@ -58,7 +58,8 @@ const Leads = () => {
             No leads found.
           </div>
         ) : (
-        <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[600px] text-left border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200/80 text-xs text-slate-500 uppercase font-semibold">
               <th className="p-4">Name</th>
@@ -77,11 +78,12 @@ const Leads = () => {
                     {lead.status}
                   </span>
                 </td>
-                <td className="p-4 font-medium">{lead.dealValue}</td>
+                <td className="p-4 font-medium">${lead.dealValue}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
         )}
       </div>
     </div>
