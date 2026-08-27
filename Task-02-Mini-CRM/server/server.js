@@ -3,6 +3,7 @@ const cors = require('cors')
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRouter = require('./routes/authRoutes');
+const leadRouter = require('./routes/leadRoutes');
 
 
 dotenv.config()
@@ -16,7 +17,8 @@ app.use(cors({
 }))
 
 
-app.use('/api', authRouter)
+app.use('/api', authRouter);
+app.use('/api', leadRouter);
 
 connectDB()
 
