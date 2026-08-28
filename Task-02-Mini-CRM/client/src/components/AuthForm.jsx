@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const AuthForm = () => {
+  const { login } = useAuth();
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -34,7 +36,7 @@ const AuthForm = () => {
 
       console.log(response.data);
 
-      localStorage.setItem("token", response.data.token);
+      login(response.data)
       navigate("/salesoverview")
 
       setMessage(response.data.message);
