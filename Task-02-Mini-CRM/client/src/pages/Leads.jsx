@@ -85,7 +85,7 @@ const Leads = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
-                  {leadsList.map((lead) => (
+                  {currentLeads.map((lead) => (
                     <tr
                       key={lead._id}
                       className="hover:bg-slate-50/50 transition-colors cursor-pointer"
