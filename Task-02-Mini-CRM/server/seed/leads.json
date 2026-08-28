@@ -1,0 +1,222 @@
+[
+  {
+    "fullName": "Abel Tesfaye",
+    "email": "abel.tesfaye@example.com",
+    "status": "New",
+    "dealValue": 4500,
+    "notes": [
+      {
+        "text": "Lead came through the website contact form."
+      }
+    ]
+  },
+  {
+    "fullName": "Mekdes Alemu",
+    "email": "mekdes.alemu@example.com",
+    "status": "Contacted",
+    "dealValue": 7200,
+    "notes": [
+      {
+        "text": "Initial call completed. Customer is interested in the premium package."
+      }
+    ]
+  },
+  {
+    "fullName": "Daniel Bekele",
+    "email": "daniel.bekele@example.com",
+    "status": "Qualified",
+    "dealValue": 12500,
+    "notes": [
+      {
+        "text": "Qualified lead. Budget and requirements confirmed."
+      }
+    ]
+  },
+  {
+    "fullName": "Hanna Girma",
+    "email": "hanna.girma@example.com",
+    "status": "Proposal Sent",
+    "dealValue": 18000,
+    "notes": [
+      {
+        "text": "Proposal sent. Waiting for customer feedback."
+      }
+    ]
+  },
+  {
+    "fullName": "Samuel Worku",
+    "email": "samuel.worku@example.com",
+    "status": "Closed Won",
+    "dealValue": 25000,
+    "notes": [
+      {
+        "text": "Deal successfully closed."
+      }
+    ]
+  },
+  {
+    "fullName": "Sara Yohannes",
+    "email": "sara.yohannes@example.com",
+    "status": "Closed Won",
+    "dealValue": 15000,
+    "notes": [
+      {
+        "text": "Customer signed the agreement."
+      }
+    ]
+  },
+  {
+    "fullName": "Michael Johnson",
+    "email": "michael.johnson@example.com",
+    "status": "Closed Lost",
+    "dealValue": 9000,
+    "notes": [
+      {
+        "text": "Customer selected another provider."
+      }
+    ]
+  },
+  {
+    "fullName": "Meron Haile",
+    "email": "meron.haile@example.com",
+    "status": "New",
+    "dealValue": 6300,
+    "notes": [
+      {
+        "text": "New lead from LinkedIn campaign."
+      }
+    ]
+  },
+  {
+    "fullName": "Yonas Tadesse",
+    "email": "yonas.tadesse@example.com",
+    "status": "Contacted",
+    "dealValue": 8200,
+    "notes": [
+      {
+        "text": "Sent product information and pricing."
+      }
+    ]
+  },
+  {
+    "fullName": "Liya Kebede",
+    "email": "liya.kebede@example.com",
+    "status": "Qualified",
+    "dealValue": 11000,
+    "notes": [
+      {
+        "text": "Customer confirmed requirements and estimated budget."
+      }
+    ]
+  },
+  {
+    "fullName": "Nathan Brown",
+    "email": "nathan.brown@example.com",
+    "status": "Proposal Sent",
+    "dealValue": 22000,
+    "notes": [
+      {
+        "text": "Proposal sent after discovery meeting."
+      }
+    ]
+  },
+  {
+    "fullName": "Rahel Solomon",
+    "email": "rahel.solomon@example.com",
+    "status": "Closed Won",
+    "dealValue": 19500,
+    "notes": [
+      {
+        "text": "Contract signed and payment received."
+      }
+    ]
+  },
+  {
+    "fullName": "Brook Getachew",
+    "email": "brook.getachew@example.com",
+    "status": "Closed Won",
+    "dealValue": 32000,
+    "notes": [
+      {
+        "text": "Large enterprise deal successfully completed."
+      }
+    ]
+  },
+  {
+    "fullName": "Emily Carter",
+    "email": "emily.carter@example.com",
+    "status": "Closed Lost",
+    "dealValue": 14500,
+    "notes": [
+      {
+        "text": "Budget was not approved."
+      }
+    ]
+  },
+  {
+    "fullName": "Fitsum Mengistu",
+    "email": "fitsum.mengistu@example.com",
+    "status": "New",
+    "dealValue": 5500,
+    "notes": [
+      {
+        "text": "Lead submitted a request for a product demo."
+      }
+    ]
+  },
+  {
+    "fullName": "Grace Wilson",
+    "email": "grace.wilson@example.com",
+    "status": "Contacted",
+    "dealValue": 9800,
+    "notes": [
+      {
+        "text": "Follow-up scheduled for next week."
+      }
+    ]
+  },
+  {
+    "fullName": "Henok Desta",
+    "email": "henok.desta@example.com",
+    "status": "Qualified",
+    "dealValue": 16500,
+    "notes": [
+      {
+        "text": "Lead is highly interested and has confirmed budget."
+      }
+    ]
+  },
+  {
+    "fullName": "Olivia Martin",
+    "email": "olivia.martin@example.com",
+    "status": "Proposal Sent",
+    "dealValue": 27500,
+    "notes": [
+      {
+        "text": "Proposal sent to purchasing department."
+      }
+    ]
+  },
+  {
+    "fullName": "Kaleb Fikru",
+    "email": "kaleb.fikru@example.com",
+    "status": "Closed Won",
+    "dealValue": 21000,
+    "notes": [
+      {
+        "text": "Deal closed successfully after final negotiation."
+      }
+    ]
+  },
+  {
+    "fullName": "James Anderson",
+    "email": "james.anderson@example.com",
+    "status": "Closed Lost",
+    "dealValue": 12000,
+    "notes": [
+      {
+        "text": "Customer postponed the project indefinitely."
+      }
+    ]
+  }
+]

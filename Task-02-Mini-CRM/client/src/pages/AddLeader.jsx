@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import api from '../api/axios';
+import { useEffect } from 'react';
 
 const AddLeader = () => {
   const [formData, setFormData] = useState({
@@ -8,25 +10,21 @@ const AddLeader = () => {
     dealValue: '',
     initialNote: '',
   });
+  
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const response = await api.get('/auth/getLead');
 
-  const [leadsList, setLeadsList] = useState([
-    {
-      _id: '65f1a2b3c4d5e6f7a8b9c0d1',
-      fullName: 'Samantha Miller',
-      email: 'samantha@acmecorp.com',
-      status: 'Qualified',
-      dealValue: 5000,
-      notes: [{ text: 'Met at tech conference.', createdAt: '2026-08-20' }],
-    },
-    {
-      _id: '65f1a2b3c4d5e6f7a8b9c0d2',
-      fullName: 'David Miller',
-      email: 'david@company.io',
-      status: 'Contacted',
-      dealValue: 2500,
-      notes: [],
-    },
-  ]);
+        setLeadsList(response.data.leads);
+      } catch (error) {
+        console.error('Fetch leads error:', error)
+      }
+    };
+
+    fetchLeads();
+  },[])
+  const [leadsList, setLeadsList] = useState([])
 
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -34,46 +32,49 @@ const AddLeader = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try {
+      
+      const response = await api.post('/auth/addlead', formData);
 
-    // Create a new Lead object matching leadSchema & noteSchema
-    const newLead = {
-      _id: `lead_${Date.now()}`,
-      fullName: formData.fullName,
-      email: formData.email,
-      status: formData.status,
-      dealValue: Number(formData.dealValue) || 0,
-      notes: formData.initialNote.trim()
-        ? [
-            {
-              _id: `note_${Date.now()}`,
-              text: formData.initialNote,
-              createdAt: new Date().toISOString(),
-            },
-          ]
-        : [],
-      createdAt: new Date().toISOString(),
-    };
+      const newLead = response.data.lead
+      console.log(response.data.message);
 
-    setLeadsList([newLead, ...leadsList]);
-    setSuccessMessage(`Lead "${formData.fullName}" created successfully!`);
+      setLeadsList((prevLeads) => [
+        newLead,
+        ...prevLeads
+      ]);
+      
+      setSuccessMessage(
+        `Lead "${newLead.fullName}" created successfully!`
+      );
 
-    // Reset form
-    setFormData({
-      fullName: '',
-      email: '',
-      status: 'New',
-      dealValue: '',
-      initialNote: '',
-    });
+      setFormData({
+        fullName: '',
+        email: '',
+        status: 'New',
+        dealValue: '',
+        initialNote: '',
+      });
 
-    setTimeout(() => setSuccessMessage(''), 3000);
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 3000);
+    } catch (error) {
+        console.error('Create lead error:', error);
+
+        setSuccessMessage(
+          error.response?.data?.message ||
+          'Failed to create lead'
+        );
+    }
   };
 
   return (
     <div className="max-w-4xl space-y-6">
-      {/* Header */}
+
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Add New Lead</h1>
         <p className="text-xs text-slate-500 mt-1">
@@ -82,14 +83,12 @@ const AddLeader = () => {
       </div>
 
       {successMessage && (
-        <div className="p-3 text-xs font-semibold rounded-xl bg-orange-50 text-orange-600 border border-orange-200/80 max-w-xl">
+        <div className="p-3 text-xs font-semibold rounded-xl bg-green-50 text-green-600 border border-green-200/80 max-w-xl">
           {successMessage}
         </div>
       )}
 
-      {/* Main Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Form Card (5 Columns) */}
         <div className="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
           <h2 className="text-sm font-bold text-slate-900 pb-2 border-b border-slate-100">
             Lead Details
@@ -186,7 +185,6 @@ const AddLeader = () => {
           </form>
         </div>
 
-        {/* Leads List Preview Card (7 Columns) */}
         <div className="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <h2 className="text-sm font-bold text-slate-900">Recent Leads</h2>

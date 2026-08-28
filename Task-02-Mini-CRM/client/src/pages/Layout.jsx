@@ -21,7 +21,7 @@ const Layout = () => {
         onLogout={handleLogout} 
         />
 
-      <main className="min-w-0 flex-1 overflow-y-auto p-4 pt-20 sm:p-6 sm:pt-20 lg:p-8">
+      <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto p-4 pt-20 sm:p-6 sm:pt-20 lg:p-8">
         <button
           type="button"
           onClick={() => setIsMenuOpen(true)}
