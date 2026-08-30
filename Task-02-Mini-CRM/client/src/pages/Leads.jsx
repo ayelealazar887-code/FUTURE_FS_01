@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import api from "../api/axios";
 import LoadingPage from "../components/Loading";
+import { FaSearch } from 'react-icons/fa'
 
 const Leads = () => {
   const [leadsList, setLeadsList] = useState([]);
@@ -11,6 +12,7 @@ const Leads = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchLeads = async () => {
@@ -43,10 +45,21 @@ const Leads = () => {
     }
   };
 
+  const filteredLeads = leadsList.filter((lead) => {
+    const searchTerm = search.toLowerCase().trim();
+
+    return (
+      lead.fullName?.toLowerCase().includes(searchTerm) ||
+      lead.email?.toLowerCase().includes(searchTerm) ||
+      lead.status?.toLowerCase().includes(searchTerm)
+    );
+  });
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentLeads = leadsList.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(leadsList.length / itemsPerPage);
+  const currentLeads = filteredLeads.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredLeads.length / itemsPerPage);
 
   if (loading) {
     return (
@@ -58,6 +71,22 @@ const Leads = () => {
 
   return (
     <div className="space-y-6">
+      <div className="mt-3 flex items-center overflow-hidden rounded-lg border border-slate-300 bg-white shadow-sm">
+        <input
+          type="text"
+          placeholder="Search leads..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setCurrentPage(1);
+          }}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          className="flex-1 px-4 py-2.5 text-sm outline-none bg-white text-slate-900 placeholder-slate-400"
+        />
+        <button className="bg-emerald-600 px-5 py-2.5 text-white hover:bg-emerald-700 transition-colors duration-200 flex items-center justify-center">
+          <FaSearch size={18} />
+        </button>
+      </div>
       <h1 className="text-2xl font-bold text-slate-900">Leads Management</h1>
 
       {error && (
@@ -114,28 +143,39 @@ const Leads = () => {
               </table>
             </div>
             {totalPages > 1 && (
-              <div className="flex items-center justify-between p-4 border-t border-slate-100">
-                <span className="text-sm text-slate-500">
+              <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-50/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-sm font-medium text-slate-600">
                   Showing {indexOfFirstItem + 1} to{" "}
-                  {Math.min(indexOfLastItem, leadsList.length)} of{" "}
-                  {leadsList.length} entries
+                  {Math.min(indexOfLastItem, filteredLeads.length)} of{" "}
+                  {filteredLeads.length} entries
                 </span>
-                <div className="flex gap-2">
+
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={currentPage === 1}
-                    className="px-3 py-1 text-sm border rounded-lg disabled:opacity-50 hover:bg-slate-50"
+                    className="rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-300 disabled:hover:text-slate-700"
                   >
                     Previous
                   </button>
+
+                  <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-1.5 py-1 shadow-sm">
+                    <span className="rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs font-bold text-white">
+                      {currentPage}
+                    </span>
+                    <span className="px-1 text-xs font-medium text-slate-500">
+                      / {totalPages}
+                    </span>
+                  </div>
+
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                     }
                     disabled={currentPage === totalPages}
-                    className="px-3 py-1 text-sm border rounded-lg disabled:opacity-50 hover:bg-slate-50"
+                    className="rounded-xl bg-gradient-to-r from-orange-500 to-rose-500 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-orange-500/20 transition-all duration-200 hover:from-orange-400 hover:to-rose-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:from-orange-500 disabled:hover:to-rose-500"
                   >
                     Next
                   </button>

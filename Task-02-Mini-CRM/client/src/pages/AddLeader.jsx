@@ -193,7 +193,7 @@ const AddLeader = () => {
             </span>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="max-h-[60vh] overflow-y-auto overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="text-[11px] text-slate-400 uppercase font-semibold border-b border-slate-100">
