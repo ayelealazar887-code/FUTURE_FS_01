@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import Sidebar from '../components/Sidebar'
+import { useAuth } from '../context/authContext';
 
 const Layout = () => {
+  const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    logout();
     navigate('/login')
   }
 
